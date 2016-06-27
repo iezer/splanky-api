@@ -24,5 +24,6 @@ defmodule Cats.Router do
     pipe_through :api
 
     resources "/artists", ArtistController, except: [:new, :edit]
+    resources "/events", EventController, except: [:new, :edit]
   end
 end
