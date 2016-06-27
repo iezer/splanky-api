@@ -34,9 +34,23 @@ defmodule ScraperTest do
         </a>
       </div>
     </div>
+    <div class="mini-artist">
+      <div class="mini-artist-info">
+        <h2 class="mini-artist-info__title">
+          <a>Swinging Piano</a>
+        </h2>
+        <p class="mini-artist-info__instrument">
+          Piano
+        </p>
+        <a class="mini-artist-info__button" href="/artists/123-swinging-piano/">
+          Artist profile
+        </a>
+      </div>
+    </div>
+
   """
   defp artist_html, do: @artist_html
-  defp artist_info, do: Floki.parse(artist_html) |> Scraper.artist_info
+  defp artist_info, do: Scraper.artists(artist_html) |> hd |> Scraper.artist_info
   defp gig_info, do: Floki.parse(artist_html) |> Scraper.gig_info
 
   test "parses 1 artist" do

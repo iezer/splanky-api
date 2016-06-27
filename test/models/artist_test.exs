@@ -15,4 +15,6 @@ defmodule Cats.ArtistTest do
     changeset = Artist.changeset(%Artist{}, @invalid_attrs)
     refute changeset.valid?
   end
+
+  # TODO unique url if not nil
 end

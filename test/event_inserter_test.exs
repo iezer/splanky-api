@@ -14,4 +14,12 @@ defmodule EventInserterTest do
     EventInserter.find_or_create_artist(@valid_attrs)
     assert Repo.get_by!(Artist, @valid_attrs)
   end
+
+  test "can find and return artist" do
+    artist = Artist.changeset(%Artist{}, @valid_attrs) |> Repo.insert |> elem(1)
+    assert Repo.all(Artist) |> length == 1, "sanity check Artist starts with 1"
+    found = EventInserter.find_or_create_artist(@valid_attrs)
+    assert artist == found
+    assert Repo.all(Artist) |> length == 1, "no duplicate artist"
+  end
 end
