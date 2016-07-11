@@ -75,25 +75,32 @@ defmodule ScraperTest do
     assert artist_info[:url] === "/artists/824-swinging-guitar/"
   end
 
-  test "parses date string" do
-    assert gig_info[:date_string] === "Sunday, April 3, 2016"
-  end
-
-  test "parses date" do
-    assert gig_info[:date] === "2016-04-03"
-  end
-
-  test "parses time" do
-    assert gig_info[:time] === "10:30 PM - 1:00 AM"
-  end
-
   test "parses title" do
     assert gig_info[:title] === "The Big Band!"
   end
 
-  test "parses dates" do
-    assert Scraper.date("Sunday, April 3, 2016") === "2016-04-03"
-    assert Scraper.date("Saturday, November 24, 2011") === "2011-11-24"
+  test "parses dates past midnight" do
+    dates = Scraper.dates("Sunday, April 3, 2016 | 10:30 PM - 1:00 AM")
+
+    # TODO has to be the next day
+
+    assert dates ==
+      [
+        elem(Timex.parse("2016-04-03T22:30:00.000+00:00", "{ISO:Extended}"), 1),
+        elem(Timex.parse("2016-04-04T01:00:00.000+00:00", "{ISO:Extended}"), 1)
+      ]
+  end
+
+  test "parses dates before midnight" do
+    dates = Scraper.dates("Sunday, April 3, 2016 | 7:30 PM - 10:00 PM")
+
+    # TODO has to be the next day
+
+    assert dates ==
+      [
+        elem(Timex.parse("2016-04-03T19:30:00.000+00:00", "{ISO:Extended}"), 1),
+        elem(Timex.parse("2016-04-03T22:00:00.000+00:00", "{ISO:Extended}"), 1)
+      ]
   end
 
   test "parses event urls" do

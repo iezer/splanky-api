@@ -11,18 +11,12 @@ defmodule Scraper do
     }
   end
 
-  def date(date_string) do
-    { :ok, date } = Timex.parse(date_string, "%A, %B %e, %Y", :strftime)
-    { :ok, ret } = Timex.format(date, "%F", :strftime) #YYYY-MM-DD
-    ret
-  end
-
   def gig_info(html) do
-    [ date_string, time ] = date_time(html, ".event-view__header__meta__time")
+    [ start_date, end_date ] = date_text(html, ".event-view__header__meta__time")
+    |> dates
     %{
-      date_string: date_string,
-      date: date(date_string),
-      time: time,
+      start_date: start_date,
+      end_date: end_date,
       title: clean_text(html, ".event-view__header__meta__title")
     }
   end
@@ -39,10 +33,21 @@ defmodule Scraper do
     Floki.find(html, selector) |> Floki.attribute(attr) |> hd
   end
 
-  defp date_time(html, selector) do
+  defp date_text(html, selector) do
     Floki.find(html, selector) |>
-      Floki.text |>
+      Floki.text
+  end
+
+  def dates(date_text) do
+    [date_string, times] = date_text |>
       String.split("|") |>
       Enum.map(&String.strip/1)
+    [date_string, times]
+    [start_time, end_time] = String.split(times, " - ")
+    start_date = Enum.join([date_string, start_time], " ")
+    end_date = Enum.join([date_string, end_time], " ")
+    [start_date, end_date] = Enum.map([start_date, end_date], fn s-> Timex.parse(s, "%A, %B %e, %Y %l:%M %p", :strftime) end)
+    end_date = Timex.shift(elem(end_date, 1), days: 1)
+    [elem(start_date, 1), end_date]
   end
 end

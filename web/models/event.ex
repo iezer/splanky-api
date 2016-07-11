@@ -17,4 +17,6 @@ defmodule Cats.Event do
     |> cast(params, [:url, :start_time, :end_time])
     |> validate_required([:url, :start_time, :end_time])
   end
+
+  # unique url
 end
