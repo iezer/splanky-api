@@ -1,35 +1,27 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <title>NYC Jazz Cats Social Graph</title>
     <meta name="description" content="">
-    <meta name="author" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
 
-    <title>Hello Cats!</title>
-    <link rel="stylesheet" href="<%= static_path(@conn, "/css/app.css") %>">
+<meta name="cats-client/config/environment" content="%7B%22modulePrefix%22%3A%22cats-client%22%2C%22environment%22%3A%22production%22%2C%22baseURL%22%3A%22/jazz-cats/%22%2C%22locationType%22%3A%22hash%22%2C%22EmberENV%22%3A%7B%22FEATURES%22%3A%7B%7D%7D%2C%22APP%22%3A%7B%22API_URL%22%3A%22/%22%2C%22name%22%3A%22cats-client%22%2C%22version%22%3A%220.0.0+0d546932%22%7D%2C%22ember-cli-mirage%22%3A%7B%22usingProxy%22%3Afalse%2C%22useDefaultPassthroughs%22%3Atrue%7D%2C%22exportApplicationGlobal%22%3Afalse%7D" />
+
+<link rel="stylesheet" href="<%= static_path(@conn, "/css/vendor-d41d8cd98f00b204e9800998ecf8427e.css") %>">
+<link rel="stylesheet" href="<%= static_path(@conn, "/css/cats-client-6695743f9401fa7139b9cc90015d6b2c.css") %>">
+
+
   </head>
-
   <body>
-    <div class="container">
-      <header class="header">
-        <nav role="navigation">
-          <ul class="nav nav-pills pull-right">
-            <li><a href="http://www.phoenixframework.org/docs">Get Started</a></li>
-          </ul>
-        </nav>
-        <span class="logo"></span>
-      </header>
 
-      <p class="alert alert-info" role="alert"><%= get_flash(@conn, :info) %></p>
-      <p class="alert alert-danger" role="alert"><%= get_flash(@conn, :error) %></p>
+    <script src="<%= static_path(@conn, "/js/vendor-ca275bf04a9359ae4120224a0d9195aa.js") %>"></script>
+    <script src="<%= static_path(@conn, "/js/cats-client-a525071f1ad3cbf3041eb2d3e94f3281.js") %>"></script>
 
-      <main role="main">
-        <%= render @view_module, @view_template, assigns %>
-      </main>
+    <!-- script src="assets/vendor-ca275bf04a9359ae4120224a0d9195aa.js" integrity="sha256-fRVrSJ48btE+3g4Zsd8nTi8i4vh9AH14RMP5TeM9JvE= sha512-+fJJoD7J0g93eAz/3Q91MwoDYyZem6iT5fgyrEpC/+HkI/iyxrzaCvlNuXpBfk1kswqIBLpuMjwzpHpkpP24aw==" ></script>
+    <script src="assets/cats-client-a525071f1ad3cbf3041eb2d3e94f3281.js" integrity="sha256-seQgn0znWXEZij8b/v/kqdqLP73bPdwjGrpB9q5zqzc= sha512-4QXgggkFR6HL0yks26nLTSAszmCoMkRLys2/S60j2oZ9ltZI+B7mtuImwvcwpzTd8r7+nPyDj1f0dVRQCYBmdQ==" ></script -->
 
-    </div> <!-- /container -->
-    <script src="<%= static_path(@conn, "/js/app.js") %>"></script>
+
   </body>
 </html>
