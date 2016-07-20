@@ -82,8 +82,6 @@ defmodule ScraperTest do
   test "parses dates past midnight" do
     dates = Scraper.dates("Sunday, April 3, 2016 | 10:30 PM - 1:00 AM")
 
-    # TODO has to be the next day
-
     assert dates ==
       [
         elem(Timex.parse("2016-04-03T22:30:00.000+00:00", "{ISO:Extended}"), 1),
@@ -93,8 +91,6 @@ defmodule ScraperTest do
 
   test "parses dates before midnight" do
     dates = Scraper.dates("Sunday, April 3, 2016 | 7:30 PM - 10:00 PM")
-
-    # TODO has to be the next day
 
     assert dates ==
       [

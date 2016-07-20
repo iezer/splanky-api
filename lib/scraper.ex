@@ -47,7 +47,14 @@ defmodule Scraper do
     start_date = Enum.join([date_string, start_time], " ")
     end_date = Enum.join([date_string, end_time], " ")
     [start_date, end_date] = Enum.map([start_date, end_date], fn s-> Timex.parse(s, "%A, %B %e, %Y %l:%M %p", :strftime) end)
-    end_date = Timex.shift(elem(end_date, 1), days: 1)
-    [elem(start_date, 1), end_date]
+    start_date = elem(start_date, 1)
+    end_date = elem(end_date, 1)
+    end_date = cond do
+      Timex.before?(end_date, start_date) ->
+        Timex.shift(end_date, days: 1)
+      true ->
+        end_date
+    end
+    [start_date, end_date]
   end
 end
