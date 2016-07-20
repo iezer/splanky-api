@@ -5,6 +5,7 @@ defmodule Cats.Repo.Migrations.CreateEvent do
     create table(:events) do
       add :title, :string
       add :url, :string
+      add :artist_ids, :string
       add :start_time, :datetime
       add :end_time, :datetime
 

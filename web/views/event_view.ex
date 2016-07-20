@@ -13,9 +13,10 @@ defmodule Cats.EventView do
     %{
       type: "event",
       id: event.id,
-      attriblutes: %{
+      attributes: %{
         title: event.title,
         name: event.title,
+        artist_ids: event.artist_ids,
         url: event.url,
         start_time: event.start_time,
         end_time: event.end_time

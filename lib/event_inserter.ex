@@ -13,23 +13,34 @@ defmodule EventInserter do
     end
   end
 
-  def create_event(params, url) do
+  # no duplicates
+  def create_event(params, url, artist_ids) do
     params = Map.put(params, :url, url)
-    Event.changeset(%Event{}, params)
-    |> Repo.insert |> elem(1)
+    params = Map.put(params, :artist_ids, artist_ids)
+
+    case Repo.get_by(Event, url: params.url) do
+      nil ->
+        Event.changeset(%Event{}, params)
+        |> Repo.insert |> elem(1)
+      event ->
+        event
+    end
   end
 
   def insert_event(url) do
     case HTTPoison.get(url) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
 
-        gig_info = Floki.parse(body)
-        |> Scraper.gig_info
-        |> create_event(url)
-
-        artists = Scraper.artists(body)
+        artist_ids = Scraper.artists(body)
         |> Enum.map(&Scraper.artist_info/1)
         |> Enum.map(fn(artist) -> find_or_create_artist(artist) end)
+        |> Enum.map(fn(artist) -> artist.id end)
+        |> Enum.join(",")
+
+
+        gig_info = Floki.parse(body)
+        |> Scraper.gig_info
+        |> create_event(url, artist_ids)
 
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         IO.puts "Not found :("
