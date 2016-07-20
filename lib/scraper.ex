@@ -15,8 +15,8 @@ defmodule Scraper do
     [ start_date, end_date ] = date_text(html, ".event-view__header__meta__time")
     |> dates
     %{
-      start_date: start_date,
-      end_date: end_date,
+      start_time: start_date,
+      end_time: end_date,
       title: clean_text(html, ".event-view__header__meta__title")
     }
   end
