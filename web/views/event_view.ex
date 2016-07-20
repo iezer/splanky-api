@@ -11,6 +11,7 @@ defmodule Cats.EventView do
 
   def render("event.json", %{event: event}) do
     %{id: event.id,
+      title: event.title,
       url: event.url,
       start_time: event.start_time,
       end_time: event.end_time}

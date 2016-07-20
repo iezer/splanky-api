@@ -2,6 +2,7 @@ defmodule Cats.Event do
   use Cats.Web, :model
 
   schema "events" do
+    field :title, :string
     field :url, :string
     field :start_time, Ecto.DateTime
     field :end_time, Ecto.DateTime
@@ -14,8 +15,8 @@ defmodule Cats.Event do
   """
   def changeset(struct, params \\ %{}) do
     struct
-    |> cast(params, [:url, :start_time, :end_time])
-    |> validate_required([:url, :start_time, :end_time])
+    |> cast(params, [:title, :url, :start_time, :end_time])
+    |> validate_required([:title, :url, :start_time, :end_time])
   end
 
   # unique url

@@ -2,7 +2,7 @@ defmodule Cats.EventControllerTest do
   use Cats.ConnCase
 
   alias Cats.Event
-  @valid_attrs %{end_time: %{day: 17, hour: 14, min: 0, month: 4, sec: 0, year: 2010}, start_time: %{day: 17, hour: 14, min: 0, month: 4, sec: 0, year: 2010}, url: "some content"}
+  @valid_attrs %{end_time: %{day: 17, hour: 14, min: 0, month: 4, sec: 0, year: 2010}, start_time: %{day: 17, hour: 14, min: 0, month: 4, sec: 0, year: 2010}, url: "some content", title: "some title"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
@@ -19,6 +19,7 @@ defmodule Cats.EventControllerTest do
     conn = get conn, event_path(conn, :show, event)
     assert json_response(conn, 200)["data"] == %{"id" => event.id,
       "url" => event.url,
+      "title" => event.title,
       "start_time" => event.start_time,
       "end_time" => event.end_time}
   end
