@@ -10,10 +10,16 @@ defmodule Cats.EventView do
   end
 
   def render("event.json", %{event: event}) do
-    %{id: event.id,
-      title: event.title,
-      url: event.url,
-      start_time: event.start_time,
-      end_time: event.end_time}
+    %{
+      type: "event",
+      id: event.id,
+      attriblutes: %{
+        title: event.title,
+        name: event.title,
+        url: event.url,
+        start_time: event.start_time,
+        end_time: event.end_time
+      }
+    }
   end
 end

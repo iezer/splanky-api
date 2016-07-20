@@ -10,9 +10,14 @@ defmodule Cats.ArtistView do
   end
 
   def render("artist.json", %{artist: artist}) do
-    %{id: artist.id,
-      name: artist.name,
-      url: artist.url,
-      instrument: artist.instrument}
+    %{
+      type: "artist",
+      id: artist.id,
+      attributes: %{
+        name: artist.name,
+        url: artist.url,
+        instrument: artist.instrument
+      }
+    }
   end
 end
