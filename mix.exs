@@ -43,7 +43,8 @@ defmodule Cats.Mixfile do
      {:httpoison, "> 0.5.0"},
      {:floki, "~> 0.3"},
      {:hound, "> 0.6.0"},
-     {:hackney, "1.4.4"}
+     {:hackney, "1.4.4"},
+     {:corsica, "~> 0.4"}
     ]
   end
 

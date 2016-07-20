@@ -10,7 +10,7 @@ defmodule Cats.Router do
   end
 
   pipeline :api do
-    plug :accepts, ["json"]
+    plug :accepts, ["json-api"]
   end
 
   scope "/", Cats do
