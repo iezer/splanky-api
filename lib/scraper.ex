@@ -21,7 +21,7 @@ defmodule Scraper do
     }
   end
 
-  def event_urls(html), do: Floki.find(html, "a.no-bg-calendar__event") |> Floki.attribute("href")
+  def event_urls(html), do: Floki.find(html, ".day__event-title a") |> Floki.attribute("href")
 
   # PRIVATE METHODS
 

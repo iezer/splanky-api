@@ -4,9 +4,9 @@ defmodule ScraperTest do
 
   @calendar_html """
     <div>
-      <a class="no-bg-calendar__event" href="https://www.smallslive.com/events/01-quintet/">
-      <a class="no-bg-calendar__event" href="https://www.smallslive.com/events/02-trio/">
-      <a class="no-bg-calendar__event" href="https://www.smallslive.com/events/03-quintet/">
+      <a class="day__event-title" href="https://www.smallslive.com/events/01-quintet/">
+      <a class="day__event-title" href="https://www.smallslive.com/events/02-trio/">
+      <a class="day__event-title" href="https://www.smallslive.com/events/03-quintet/">
   """
   defp calendar_html, do: @calendar_html
 

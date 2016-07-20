@@ -28,8 +28,25 @@ defmodule EventInserter do
         |> create_event(url)
 
         artists = Scraper.artists(body)
-        |>Enum.map(&Scraper.artist_info/1)
+        |> Enum.map(&Scraper.artist_info/1)
         |> Enum.map(fn(artist) -> find_or_create_artist(artist) end)
+
+      {:ok, %HTTPoison.Response{status_code: 404}} ->
+        IO.puts "Not found :("
+      {:error, %HTTPoison.Error{reason: reason}} ->
+        IO.inspect reason
+    end
+  end
+
+  # Usage
+  # url = "https://www.smallslive.com/events/calendar/2016/6/"
+  # EventInserter.insert_events(url)
+  def insert_events(url) do
+    case HTTPoison.get(url) do
+      {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
+
+        Scraper.event_urls(body)
+        |> Enum.map(fn(u) -> insert_event(Enum.join(["https://www.smallslive.com", u], "")) end)
 
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         IO.puts "Not found :("
