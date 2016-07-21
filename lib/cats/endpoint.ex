@@ -38,7 +38,10 @@ defmodule Cats.Endpoint do
     key: "_cats_key",
     signing_salt: "T85lMcUc"
 
-  plug Corsica, [origins: ["http://localhost:4200"]]
+  plug Corsica, [origins: [
+                    "http://localhost:4200",
+                    "http://iezer.github.io/jazz-cats"
+                  ]]
 
   plug Cats.Router
 end
