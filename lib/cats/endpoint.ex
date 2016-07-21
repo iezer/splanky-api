@@ -40,7 +40,8 @@ defmodule Cats.Endpoint do
 
   plug Corsica, [origins: [
                     "http://localhost:4200",
-                    "http://iezer.github.io/jazz-cats"
+                    "http://iezer.github.io",
+                    "https://iezer.github.io"
                   ]]
 
   plug Cats.Router
