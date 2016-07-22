@@ -6,7 +6,7 @@ defmodule Cats.Repo.Migrations.CreateArtist do
       add :name, :string
       add :url, :string
       add :instrument, :string
-
+      add :image, :text
       timestamps()
     end
 

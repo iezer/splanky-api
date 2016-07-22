@@ -7,7 +7,8 @@ defmodule Scraper do
     %{
       name: clean_text(html, ".mini-artist-info__title a"),
       instrument: clean_text(html, ".mini-artist-info__instrument"),
-      url: first_attribute(html, ".mini-artist-info__button", "href")
+      url: first_attribute(html, ".mini-artist-info__button", "href"),
+      image: first_attribute(html, ".mini-artist__image img", "src")
     }
   end
 

@@ -16,7 +16,8 @@ defmodule Cats.ArtistView do
       attributes: %{
         name: artist.name,
         url: artist.url,
-        instrument: artist.instrument
+        instrument: artist.instrument,
+        image: artist.image
       }
     }
   end

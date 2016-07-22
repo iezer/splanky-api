@@ -6,8 +6,7 @@ defmodule EventInserterTest do
   alias Cats.Artist
   alias Cats.Repo
 
-  @valid_attrs %{instrument: "piano", name: "Johnny", url: "/artists/123-johnny"
-  }
+  @valid_attrs %{instrument: "piano", name: "Johnny", url: "/artists/123-johnny", image: "/swinging.png"}
 
   test "can create artist" do
     assert Repo.all(Artist) |> length == 0, "sanity check Artist starts empty"

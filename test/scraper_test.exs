@@ -22,6 +22,11 @@ defmodule ScraperTest do
       </h1>
     </div>
     <div class="mini-artist">
+      <div class="mini-artist__image">
+        <a>
+          <img src="/swinging-guitar.png">
+        </a>
+      </div>
       <div class="mini-artist-info">
         <h2 class="mini-artist-info__title">
           <a>Swinging Guitar</a>
@@ -73,6 +78,10 @@ defmodule ScraperTest do
 
   test "parses url" do
     assert artist_info[:url] === "/artists/824-swinging-guitar/"
+  end
+
+  test "parses image" do
+    assert artist_info[:image] === "/swinging-guitar.png"
   end
 
   test "parses title" do

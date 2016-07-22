@@ -2,7 +2,7 @@ defmodule Cats.ArtistControllerTest do
   use Cats.ConnCase
 
   alias Cats.Artist
-  @valid_attrs %{instrument: "some content", name: "some content", url: "some content"}
+  @valid_attrs %{instrument: "some content", name: "some content", url: "some content", image: "/image.png"}
   @invalid_attrs %{}
 
   setup %{conn: conn} do
@@ -20,7 +20,8 @@ defmodule Cats.ArtistControllerTest do
     assert json_response(conn, 200)["data"] == %{"id" => artist.id,
       "name" => artist.name,
       "url" => artist.url,
-      "instrument" => artist.instrument}
+      "instrument" => artist.instrument,
+      "image" => artist.image}
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn} do
