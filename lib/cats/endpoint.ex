@@ -41,7 +41,7 @@ defmodule Cats.Endpoint do
   plug Corsica, [
     origins: [
       "http://localhost:4200",
-      "http://localhost:3000"
+      "http://localhost:3000",
       "http://iezer.github.io",
       "https://iezer.github.io"
     ]
