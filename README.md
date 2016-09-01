@@ -11,6 +11,11 @@ Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.
 
 Ready to run in production? Please [check our deployment guides](http://www.phoenixframework.org/docs/deployment).
 
+# Heroku
+
+Need to set pool size
+`heroku run "POOL_SIZE=2 iex -S mix" -a jazz-cats-api`
+
 ## Learn more
 
   * Official website: http://www.phoenixframework.org/
