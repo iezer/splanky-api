@@ -43,7 +43,9 @@ defmodule Cats.Endpoint do
       "http://localhost:4200",
       "http://localhost:3000",
       "http://iezer.github.io",
-      "https://iezer.github.io"
+      "https://iezer.github.io",
+      "http://splanky.net",
+      "http://www.splanky.net"
     ]
   ]
 

@@ -13,7 +13,6 @@ defmodule EventInserter do
     end
   end
 
-  # no duplicates
   def create_event(params, url, artist_ids) do
     params = Map.put(params, :url, url)
     params = Map.put(params, :artist_ids, artist_ids)
