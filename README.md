@@ -20,6 +20,12 @@ Ready to run in production? Please [check our deployment guides](http://www.phoe
 Need to set pool size
 `heroku run "POOL_SIZE=2 iex -S mix" -a jazz-cats-api`
 
+# Adding Data
+
+ * See `/lib/event_inserter`
+ * `iex -S mix`
+ * `EventInserter.insert_events("https://www.smallslive.com/events/calendar/2017/12/")`
+
 ## Learn more
 
   * Official website: http://www.phoenixframework.org/
