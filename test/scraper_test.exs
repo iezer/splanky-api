@@ -55,8 +55,8 @@ defmodule ScraperTest do
 
   """
   defp artist_html, do: @artist_html
-  defp artist_info, do: Scraper.artists(artist_html) |> hd |> Scraper.artist_info
-  defp gig_info, do: Floki.parse(artist_html) |> Scraper.gig_info
+  defp artist_info, do: Scraper.artists(artist_html()) |> hd |> Scraper.artist_info
+  defp gig_info, do: Floki.parse(artist_html()) |> Scraper.gig_info
 
   test "parses 1 artist" do
     html = "<div class=\"mini-artist\"></div>"
@@ -69,23 +69,23 @@ defmodule ScraperTest do
   end
 
   test "parses name" do
-    assert artist_info[:name] === "Swinging Guitar"
+    assert artist_info()[:name] === "Swinging Guitar"
   end
 
   test "parses instrument" do
-    assert artist_info[:instrument] === "Guitar"
+    assert artist_info()[:instrument] === "Guitar"
   end
 
   test "parses url" do
-    assert artist_info[:url] === "/artists/824-swinging-guitar/"
+    assert artist_info()[:url] === "/artists/824-swinging-guitar/"
   end
 
   test "parses image" do
-    assert artist_info[:image] === "/swinging-guitar.png"
+    assert artist_info()[:image] === "/swinging-guitar.png"
   end
 
   test "parses title" do
-    assert gig_info[:title] === "The Big Band!"
+    assert gig_info()[:title] === "The Big Band!"
   end
 
   test "parses dates past midnight" do
@@ -109,7 +109,7 @@ defmodule ScraperTest do
   end
 
   test "parses event urls" do
-    urls = Scraper.event_urls(calendar_html)
+    urls = Scraper.event_urls(calendar_html())
     assert urls |> length === 3
     urls |> Enum.map(fn(url) -> assert Regex.match?(~r/^https?:\/\/www.smallslive.com\/events/, url), url end)
   end
