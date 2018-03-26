@@ -17,12 +17,18 @@ defmodule Cats.EventControllerTest do
   test "shows chosen resource", %{conn: conn} do
     event = Repo.insert! %Event{}
     conn = get conn, event_path(conn, :show, event)
-    assert json_response(conn, 200)["data"] == %{"id" => event.id,
-      "url" => event.url,
-      "title" => event.title,
-      "artist_ids" => event.artist_ids,
-      "start_time" => event.start_time,
-      "end_time" => event.end_time}
+    assert json_response(conn, 200)["data"] == %{
+      "id" => event.id,
+      "type" => "event",
+      "attributes" => %{
+        "url" => event.url,
+        "title" => event.title,
+        "name" => event.title,
+        "artist_ids" => event.artist_ids,
+        "start_time" => event.start_time,
+        "end_time" => event.end_time
+      }
+    }
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn} do

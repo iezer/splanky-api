@@ -3,8 +3,12 @@
 To start your Phoenix app:
 
   * Install dependencies with `mix deps.get`
+  * `psql -d postgres;`
+  * `CREATE ROLE postgres LOGIN CREATEDB;`
   * Create and migrate your database with `mix ecto.create && mix ecto.migrate`
+  * Create and migrate your test database with `MIX_ENV=test mix ecto.create && mix ecto.migrate`
   * Install Node.js dependencies with `npm install`
+  * `mix test`
   * Start Phoenix endpoint with `mix phoenix.server`
 
 Now you can visit [`localhost:4000`](http://localhost:4000) from your browser.

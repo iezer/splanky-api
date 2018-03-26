@@ -18,10 +18,13 @@ defmodule Cats.ArtistControllerTest do
     artist = Repo.insert! %Artist{}
     conn = get conn, artist_path(conn, :show, artist)
     assert json_response(conn, 200)["data"] == %{"id" => artist.id,
-      "name" => artist.name,
-      "url" => artist.url,
-      "instrument" => artist.instrument,
-      "image" => artist.image}
+      "type" => "artist",
+      "attributes" => %{
+        "name" => artist.name,
+        "url" => artist.url,
+        "instrument" => artist.instrument,
+        "image" => artist.image}
+      }
   end
 
   test "renders page not found when id is nonexistent", %{conn: conn} do
