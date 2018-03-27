@@ -7,7 +7,10 @@ defmodule Cats.Event do
     field :artist_ids, :string
     field :start_time, Ecto.DateTime
     field :end_time, Ecto.DateTime
-    many_to_many :artists, Cats.Artist, join_through: "artists_events"
+
+    has_many :artists_events, Cats.ArtistEvent
+    has_many :artists, through: [:artists_events, :artist]
+
     timestamps()
   end
 

@@ -28,7 +28,7 @@ defmodule Cats.ArtistController do
   end
 
   def show(conn, %{"id" => id}) do
-    artist = Repo.get!(Artist, id)
+    artist = Repo.get!(Artist, id) |> Repo.preload(:events)
     render(conn, "show.json-api", data: artist)
   end
 

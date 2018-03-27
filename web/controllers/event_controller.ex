@@ -7,8 +7,9 @@ defmodule Cats.EventController do
   plug :scrub_params, "data" when action in [:create, :update]
 
   def index(conn, _params) do
-    events = Repo.all(Event)
-    render(conn, "index.json-api", data: events)
+    include = _params["include"] || ""
+    events = Repo.all(Event) |> Repo.preload(:artists)
+    render(conn, "index.json-api", data: events, opts: [include: include])
   end
 
   def create(conn, %{"data" => data = %{"type" => "event", "attributes" => _event_params}}) do
@@ -27,9 +28,11 @@ defmodule Cats.EventController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
-    event = Repo.get!(Event, id)
-    render(conn, "show.json-api", data: event)
+  def show(conn, params) do
+    id = params["id"]
+    include = params["include"] || ""
+    event = Repo.get!(Event, id) |> Repo.preload(:artists)
+    render(conn, "show.json-api", data: event, opts: [include: include])
   end
 
   def update(conn, %{"id" => id, "data" => data = %{"type" => "event", "attributes" => _event_params}}) do
