@@ -6,7 +6,7 @@ defmodule Cats.Artist do
     field :url, :string
     field :instrument, :string
     field :image, :string
-
+    many_to_many :events, Cats.Event, join_through: "artists_events"
     timestamps()
   end
 
