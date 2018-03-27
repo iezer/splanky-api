@@ -43,6 +43,7 @@ defmodule Cats.Mixfile do
      {:timex, "~> 2.0.0"},
      {:httpoison, "> 0.5.0"},
      {:floki, "~> 0.3"},
+     {:ja_serializer, "~> 0.13.0"},
      {:hound, "> 0.6.0"},
      {:hackney, "1.4.4"},
      {:corsica, "~> 0.4"}
