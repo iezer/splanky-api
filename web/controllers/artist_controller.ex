@@ -27,9 +27,11 @@ defmodule Cats.ArtistController do
     end
   end
 
-  def show(conn, %{"id" => id}) do
+  def show(conn, params) do
+    id = params["id"]
     artist = Repo.get!(Artist, id) |> Repo.preload(:events)
-    render(conn, "show.json-api", data: artist)
+    include = params["include"] || ""
+    render(conn, "show.json-api", data: artist, opts: [include: include])
   end
 
   def update(conn, %{"id" => id, "data" => data = %{"type" => "artist", "attributes" => _artist_params}}) do
