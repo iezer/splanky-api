@@ -8,7 +8,17 @@ defmodule Cats.EventController do
 
   def index(conn, _params) do
     include = _params["include"] || ""
-    events = Repo.all(Event) |> Repo.preload(:artists)
+    year =  _params["filter"]["year"]
+    month = _params["filter"]["month"]
+    events = if year != nil and month != nil do
+      year = year |> Integer.parse |> elem(0)
+      month = month |> Integer.parse |> elem(0)
+      Cats.Event.for_month(year, month)
+    else
+      Repo.all(Event)
+    end
+
+    events = events |> Repo.preload(:artists)
     render(conn, "index.json-api", data: events, opts: [include: include])
   end
 
