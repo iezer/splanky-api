@@ -30,16 +30,18 @@ defmodule EventInserter do
     case HTTPoison.get(url) do
       {:ok, %HTTPoison.Response{status_code: 200, body: body}} ->
 
-        artist_ids = Scraper.artists(body)
+        artists = Scraper.artists(body)
         |> Enum.map(&Scraper.artist_info/1)
         |> Enum.map(fn(artist) -> find_or_create_artist(artist) end)
+
+        artist_ids = artists
         |> Enum.map(fn(artist) -> artist.id end)
         |> Enum.join(",")
 
-
-        gig_info = Floki.parse(body)
+        event = Floki.parse(body)
         |> Scraper.gig_info
         |> create_event(url, artist_ids)
+        |> Cats.Event.add_artists(artists)
 
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         IO.puts "Not found :("

@@ -9,21 +9,15 @@ defmodule Cats.Event do
     field :start_time, Ecto.DateTime
     field :end_time, Ecto.DateTime
 
-    has_many :artists_events, Cats.ArtistEvent
-    has_many :artists, through: [:artists_events, :artist]
-
+    many_to_many :artists, Cats.Artist, join_through: "artists_events"
     timestamps()
   end
 
   def _query_for_month(start_year, start_month) do
     start_time = Ecto.DateTime.from_erl({{start_year, start_month, 1}, {6,0,0}})
-    end_year = start_year
-    end_month = start_month + 1
 
-    if end_month > 12 do
-      end_year = end_year + 1
-      end_month = 1
-    end
+    end_year = if start_month == 12, do: start_year + 1, else: start_year
+    end_month = if start_month == 12, do: 1, else: start_month + 1
 
     end_time = Ecto.DateTime.from_erl({{end_year, end_month, 1}, {6,0,0}})
     from e in Cats.Event, where: e.start_time >= ^start_time and e.start_time < ^end_time
@@ -45,4 +39,29 @@ defmodule Cats.Event do
   end
 
   # unique url
+
+  # TODO needs testing
+  def add_artist(event, artist) do
+    event = event |> Cats.Repo.preload(:artists)
+    artists = event.artists ++ [artist]
+    |> Enum.map(&Ecto.Changeset.change/1)
+
+    event
+    |> Ecto.Changeset.change
+    |> Ecto.Changeset.put_assoc(:artists, artists)
+    |> Cats.Repo.update
+  end
+
+
+  # TODO needs testing
+  def add_artists(event, artists) do
+    event = event |> Cats.Repo.preload(:artists)
+    artists = event.artists ++ artists
+    |> Enum.map(&Ecto.Changeset.change/1)
+
+    event
+    |> Ecto.Changeset.change
+    |> Ecto.Changeset.put_assoc(:artists, artists)
+    |> Cats.Repo.update
+  end
 end
