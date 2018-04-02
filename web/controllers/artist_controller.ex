@@ -7,8 +7,9 @@ defmodule Cats.ArtistController do
   plug :scrub_params, "data" when action in [:create, :update]
 
   def index(conn, _params) do
-    artists = Repo.all(Artist)
-    render(conn, "index.json-api", data: artists)
+    include = _params["include"] || ""
+    artists = Repo.all(Artist) |> Repo.preload(:events)
+    render(conn, "index.json-api", data: artists, opts: [include: include])
   end
 
   def create(conn, %{"data" => data = %{"type" => "artist", "attributes" => _artist_params}}) do
