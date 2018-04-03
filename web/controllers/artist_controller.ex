@@ -30,7 +30,10 @@ defmodule Cats.ArtistController do
 
   def show(conn, params) do
     id = params["id"]
-    artist = Repo.get!(Artist, id) |> Repo.preload(:events)
+
+    # Load all events, event artists,and events of those other artists
+    artist = Repo.get!(Artist, id)
+    |> Repo.preload([events: [ artists: [ events: [:artists]] ] ])
     include = params["include"] || ""
     render(conn, "show.json-api", data: artist, opts: [include: include])
   end
