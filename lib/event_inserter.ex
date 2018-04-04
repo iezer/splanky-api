@@ -38,10 +38,13 @@ defmodule EventInserter do
         |> Enum.map(fn(artist) -> artist.id end)
         |> Enum.join(",")
 
-        event = Floki.parse(body)
-        |> Scraper.gig_info
-        |> create_event(url, artist_ids)
-        |> Cats.Event.add_artists(artists)
+        # Some events have no artists for example if the club is closed
+        if length(artists) > 0 do
+          event = Floki.parse(body)
+          |> Scraper.gig_info
+          |> create_event(url, artist_ids)
+          |> Cats.Event.add_artists(artists)
+        end
 
       {:ok, %HTTPoison.Response{status_code: 404}} ->
         IO.puts "Not found :("
