@@ -6,6 +6,11 @@ defmodule Cats.EventController do
 
   plug :scrub_params, "data" when action in [:create, :update]
 
+  plug :cache_headers when action in [:show, :index]
+  defp cache_headers(conn, _) do
+    Plug.Conn.put_resp_header(conn, "Surrogate-Control", "max-age=2592000 stale-while-revalidate=60")
+  end
+
   def index(conn, _params) do
     include = _params["include"] || ""
     year =  _params["filter"]["year"]
