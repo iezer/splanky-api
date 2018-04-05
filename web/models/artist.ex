@@ -7,6 +7,9 @@ defmodule Cats.Artist do
     field :instrument, :string
     field :image, :string
 
+    has_many :artists_events, Cats.ArtistEvent
+    has_many :events, through: [:artists_events, :event]
+
     timestamps()
   end
 

@@ -2,11 +2,21 @@ defmodule Cats.EventControllerTest do
   use Cats.ConnCase
 
   alias Cats.Event
-  @valid_attrs %{end_time: %{day: 17, hour: 14, min: 0, month: 4, sec: 0, year: 2010}, start_time: %{day: 17, hour: 14, min: 0, month: 4, sec: 0, year: 2010}, url: "some content", title: "some title", artist_ids: "1,2,3"}
+  alias Cats.Repo
+
+  @valid_attrs %{}
   @invalid_attrs %{}
 
-  setup %{conn: conn} do
-    {:ok, conn: put_req_header(conn, "accept", "application/vnd.api+json")}
+  setup do
+    conn = build_conn()
+      |> put_req_header("accept", "application/vnd.api+json")
+      |> put_req_header("content-type", "application/vnd.api+json")
+
+    {:ok, conn: conn}
+  end
+  
+  defp relationships do
+    %{}
   end
 
   test "lists all entries on index", %{conn: conn} do
@@ -17,47 +27,72 @@ defmodule Cats.EventControllerTest do
   test "shows chosen resource", %{conn: conn} do
     event = Repo.insert! %Event{}
     conn = get conn, event_path(conn, :show, event)
-    assert json_response(conn, 200)["data"] == %{
-      "id" => event.id,
-      "type" => "event",
-      "attributes" => %{
-        "url" => event.url,
-        "title" => event.title,
-        "name" => event.title,
-        "artist_ids" => event.artist_ids,
-        "start_time" => event.start_time,
-        "end_time" => event.end_time
-      }
-    }
+    data = json_response(conn, 200)["data"]
+    assert data["id"] == "#{event.id}"
+    assert data["type"] == "event"
   end
 
-  test "renders page not found when id is nonexistent", %{conn: conn} do
+  test "does not show resource and instead throw error when id is nonexistent", %{conn: conn} do
     assert_error_sent 404, fn ->
       get conn, event_path(conn, :show, -1)
     end
   end
 
   test "creates and renders resource when data is valid", %{conn: conn} do
-    conn = post conn, event_path(conn, :create), event: @valid_attrs
+    conn = post conn, event_path(conn, :create), %{
+      "meta" => %{},
+      "data" => %{
+        "type" => "event",
+        "attributes" => @valid_attrs,
+        "relationships" => relationships
+      }
+    }
+
     assert json_response(conn, 201)["data"]["id"]
     assert Repo.get_by(Event, @valid_attrs)
   end
 
   test "does not create resource and renders errors when data is invalid", %{conn: conn} do
-    conn = post conn, event_path(conn, :create), event: @invalid_attrs
+    conn = post conn, event_path(conn, :create), %{
+      "meta" => %{},
+      "data" => %{
+        "type" => "event",
+        "attributes" => @invalid_attrs,
+        "relationships" => relationships
+      }
+    }
+
     assert json_response(conn, 422)["errors"] != %{}
   end
 
   test "updates and renders chosen resource when data is valid", %{conn: conn} do
     event = Repo.insert! %Event{}
-    conn = put conn, event_path(conn, :update, event), event: @valid_attrs
+    conn = put conn, event_path(conn, :update, event), %{
+      "meta" => %{},
+      "data" => %{
+        "type" => "event",
+        "id" => event.id,
+        "attributes" => @valid_attrs,
+        "relationships" => relationships
+      }
+    }
+
     assert json_response(conn, 200)["data"]["id"]
     assert Repo.get_by(Event, @valid_attrs)
   end
 
   test "does not update chosen resource and renders errors when data is invalid", %{conn: conn} do
     event = Repo.insert! %Event{}
-    conn = put conn, event_path(conn, :update, event), event: @invalid_attrs
+    conn = put conn, event_path(conn, :update, event), %{
+      "meta" => %{},
+      "data" => %{
+        "type" => "event",
+        "id" => event.id,
+        "attributes" => @invalid_attrs,
+        "relationships" => relationships
+      }
+    }
+
     assert json_response(conn, 422)["errors"] != %{}
   end
 
@@ -67,4 +102,5 @@ defmodule Cats.EventControllerTest do
     assert response(conn, 204)
     refute Repo.get(Event, event.id)
   end
+
 end

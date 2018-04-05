@@ -14,6 +14,8 @@
   "hound": {:hex, :hound, "1.0.2", "b6dd20142d00c28009fad503a23fa4a76bc11899e0d198f36a9c1448427788b2", [:mix], [{:httpoison, "~> 0.8", [hex: :httpoison, optional: false]}, {:poison, ">= 1.4.0", [hex: :poison, optional: false]}]},
   "httpoison": {:hex, :httpoison, "0.8.1", "5b706be2b0af81d1a3870479a2e1b925517c2a64316f70c6cc8aceac9e55f695", [:mix], [{:hackney, "~> 1.4.4", [hex: :hackney, optional: false]}]},
   "idna": {:hex, :idna, "1.0.2", "397e3d001c002319da75759b0a81156bf11849c71d565162436d50020cb7265e", [:make], []},
+  "inflex": {:hex, :inflex, "1.9.0", "2bef01a84437bca0a12fc107821ae7771b0ba847dccab5d1cd61f35972e66813", [:mix], []},
+  "ja_serializer": {:hex, :ja_serializer, "0.13.0", "d098af07f4ba6f35c0dc602f6e454d19985bd750d208629438bceca2f6d2a627", [:mix], [{:inflex, "~> 1.4", [hex: :inflex, optional: false]}, {:plug, "> 1.0.0", [hex: :plug, optional: false]}, {:poison, ">= 1.4.0", [hex: :poison, optional: false]}, {:scrivener, "~> 1.2 or ~> 2.0", [hex: :scrivener, optional: true]}]},
   "mime": {:hex, :mime, "1.2.0", "78adaa84832b3680de06f88f0997e3ead3b451a440d183d688085be2d709b534", [:mix], []},
   "mimerl": {:hex, :mimerl, "1.0.0", "b9813e0fa1019420da8c8001748d7c34791fd49464cb28762bc22638b1ff6198", [:rebar3], []},
   "mochiweb_html": {:hex, :mochiweb_html, "2.15.0", "d7402e967d7f9f2912f8befa813c37be62d5eeeddbbcb6fe986c44e01460d497", [:rebar3], []},

@@ -33,3 +33,11 @@ Need to set pool size
   * Docs: https://hexdocs.pm/phoenix
   * Mailing list: http://groups.google.com/group/phoenix-talk
   * Source: https://github.com/phoenixframework/phoenix
+
+
+```
+e = Cats.Repo.get(Cats.Event, 447)
+import Ecto.Query, only: [from: 2]
+as = Cats.Repo.all from a in Cats.Artist, where: a.id in [1116,1117,1118,1119]
+Cats.Event.add_artists(e, as)
+```
