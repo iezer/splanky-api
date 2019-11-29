@@ -3,6 +3,8 @@ defmodule Mix.Tasks.Month do
 
   @shortdoc "Load events for next month."
   def run(_) do
+    Application.ensure_all_started(:cats)
+
     now = DateTime.utc_now
 
     # get next month, wrap around for year
@@ -14,5 +16,7 @@ defmodule Mix.Tasks.Month do
 
     url = "https://www.smallslive.com/events/calendar/#{year}/#{month}/"
     IO.puts("loading events with URL #{url}");
+
+    EventInserter.insert_events(url)
   end
 end
