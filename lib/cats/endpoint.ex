@@ -46,6 +46,8 @@ defmodule Cats.Endpoint do
       "https://iezer.github.io",
       "http://splanky.net",
       "http://www.splanky.net",
+      "http://jazz.splanky.net",
+      "http://api.splanky.net",
       "http://splanky.herokuapp.com"
     ]
   ]
